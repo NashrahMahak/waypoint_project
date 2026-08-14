@@ -24,7 +24,7 @@
                 <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 5px; background: white;">
                     <h4><a href="{% url 'trail_detail' trail.id %}">{{ trail.name }}</a></h4>
                     <p><strong>Distance:</strong> {{ trail.distance }}</p>
-                    <p><strong>Difficulty:</strong> {{ trail._difficulty|title }}</p>
+                    <p><strong>Difficulty:</strong> {{ trail.difficulty|title }}</p>
                     <p><strong>Estimated Time:</strong> {{ trail.estimated_time|floatformat:1 }} hours</p>
                 </div>
             {% empty %}

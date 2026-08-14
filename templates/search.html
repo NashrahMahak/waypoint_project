@@ -26,7 +26,7 @@
             {% for trail in results %}
                 <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; background: white;">
                     <h4><a href="{% url 'trail_detail' trail.id %}">{{ trail.name }}</a></h4>
-                    <p>Difficulty: {{ trail._difficulty|title }} | Distance: {{ trail.distance }}</p>
+                    <p>Difficulty: {{ trail.difficulty|title }} | Distance: {{ trail.distance }}</p>
                 </div>
             {% empty %}
                 <p>No matching trails found.</p>

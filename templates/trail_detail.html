@@ -20,7 +20,7 @@
             <p><strong>Summary:</strong> {{ trail.summary }}</p>
             <p><strong>Distance:</strong> {{ trail.distance }}</p>
             <p><strong>Elevation Gain:</strong> {{ trail.elevation_gain_m }} m</p>
-            <p><strong>Difficulty Level:</strong> {{ trail._difficulty|title }}</p>
+            <p><strong>Difficulty Level:</strong> {{ trail.difficulty|title }}</p>
             <p><strong>Estimated Duration:</strong> {{ trail.estimated_time|floatformat:1 }} hours</p>
             {% if trail.grade_percentage %}
                 <p><strong>Average Grade:</strong> {{ trail.grade_percentage|floatformat:1 }}%</p>
