@@ -8,6 +8,7 @@
     <div style="max-width: 800px; margin: 20px auto; font-family: sans-serif;">
         <h2>{{ trail.name }}</h2>
         
+        <p><strong>Park:</strong> {% if trail.park %}{{ trail.park.name }} ({{ trail.park.region }}){% else %}N/A{% endif %}</p>
         <p><strong>Distance:</strong> {{ trail.distance_km|floatformat:1 }} km</p>
         <p><strong>Elevation Gain:</strong> {{ trail.elevation_gain }} m</p>
         <p><strong>Difficulty Level:</strong> {{ trail.get_difficulty_display }}</p>
