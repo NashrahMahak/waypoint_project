@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Waypoint - Search</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Waypoint</h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'report' %}">Report Trail</a>
+            <a href="{% url 'search' %}">Search</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Search Trails</h2>
+        <form method="GET">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search by trail name or difficulty...">
+            <button type="submit">Search</button>
+        </form>
+        
+        {% if query %}
+            <h3>Search Results for "{{ query }}"</h3>
+            {% for trail in results %}
+                <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; background: white;">
+                    <h4><a href="{% url 'trail_detail' trail.id %}">{{ trail.name }}</a></h4>
+                    <p>Difficulty: {{ trail._difficulty|title }} | Distance: {{ trail.distance }}</p>
+                </div>
+            {% empty %}
+                <p>No matching trails found.</p>
+            {% endfor %}
+        {% endif %}
+    </main>
+</body>
+</html>

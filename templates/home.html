@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Waypoint - Home</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Waypoint</h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'report' %}">Report Trail</a>
+            <a href="{% url 'search' %}">Search</a>
+        </nav>
+    </header>
+    <main>
+        <h2>{{ welcome_msg }}</h2>
+        <p>Explore outdoor trails and submit your condition reports!</p>
+
+        <h3>Featured Trails Catalog</h3>
+        <div class="trail-list">
+            {% for trail in trails %}
+                <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 5px; background: white;">
+                    <h4><a href="{% url 'trail_detail' trail.id %}">{{ trail.name }}</a></h4>
+                    <p><strong>Distance:</strong> {{ trail.distance }}</p>
+                    <p><strong>Difficulty:</strong> {{ trail._difficulty|title }}</p>
+                    <p><strong>Estimated Time:</strong> {{ trail.estimated_time|floatformat:1 }} hours</p>
+                </div>
+            {% empty %}
+                <p>No trails found.</p>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>
