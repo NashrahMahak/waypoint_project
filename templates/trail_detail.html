@@ -1,32 +1,25 @@
-{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Waypoint - {{ trail.name }}</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta charset="UTF-8">
+    <title>{{ trail.name }} - Detail</title>
 </head>
 <body>
-    <header>
-        <h1>Waypoint</h1>
-        <nav>
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'report' %}">Report Trail</a>
-            <a href="{% url 'search' %}">Search</a>
-        </nav>
-    </header>
-    <main>
+    <div style="max-width: 800px; margin: 20px auto; font-family: sans-serif;">
         <h2>{{ trail.name }}</h2>
-        <div style="background: white; padding: 20px; border-radius: 5px; border: 1px solid #ccc;">
-            <p><strong>Summary:</strong> {{ trail.summary }}</p>
-            <p><strong>Distance:</strong> {{ trail.distance }}</p>
-            <p><strong>Elevation Gain:</strong> {{ trail.elevation_gain_m }} m</p>
-            <p><strong>Difficulty Level:</strong> {{ trail.difficulty|title }}</p>
-            <p><strong>Estimated Duration:</strong> {{ trail.estimated_time|floatformat:1 }} hours</p>
-            {% if trail.grade_percentage %}
-                <p><strong>Average Grade:</strong> {{ trail.grade_percentage|floatformat:1 }}%</p>
+        
+        <p><strong>Distance:</strong> {{ trail.distance_km|floatformat:1 }} km</p>
+        <p><strong>Elevation Gain:</strong> {{ trail.elevation_gain }} m</p>
+        <p><strong>Difficulty Level:</strong> {{ trail.get_difficulty_display }}</p>
+        <p><strong>Status:</strong> 
+            {% if trail.is_open %}
+                Open
+            {% else %}
+                Closed
             {% endif %}
-        </div>
-        <p style="margin-top: 20px;"><a href="{% url 'home' %}">← Back to Catalog</a></p>
-    </main>
+        </p>
+
+        <a href="{% url 'home' %}">&larr; Back to Catalog</a>
+    </div>
 </body>
 </html>

@@ -1,34 +1,31 @@
-from django.shortcuts import render
-from django.http import Http404
-from waypoint_app.data import TRAILS_DB
+from django.shortcuts import render, get_object_or_404
+from trails.models import Trail
 
 def home(request):
-    trails_list = list(TRAILS_DB.values())
-    return render(request, 'home.html', {
-        'welcome_msg': 'Welcome to Waypoint Trail Finder!',
-        'trails': trails_list
-    })
+    # Query open trails ordered by distance
+    trails = Trail.objects.filter(is_open=True).order_by('-distance_km')
+    
+    context = {
+        'welcome_msg': 'Welcome to Waypoint!',
+        'trails': trails,
+    }
+    return render(request, 'home.html', context)
 
 def trail_detail(request, trail_id):
-    trail = TRAILS_DB.get(str(trail_id))
-    if not trail:
-        raise Http404("Trail not found")
+    # Fetch trail from DB by primary key or return 404
+    trail = get_object_or_404(Trail, pk=trail_id)
     return render(request, 'trail_detail.html', {'trail': trail})
 
 def report(request):
     if request.method == 'POST':
-        name = request.POST.get('name', 'Hiker')
-        trail = request.POST.get('trail', 'Unknown')
-        note = request.POST.get('note', '')
-        return render(request, 'thank_you.html', {'name': name, 'trail': trail, 'note': note})
+        name = request.POST.get('name', '')
+        return render(request, 'thank_you.html', {'name': name})
     return render(request, 'report.html')
 
 def search(request):
-    query = request.GET.get('q', '').strip().lower()
+    query = request.GET.get('q', '')
     results = []
     if query:
-        results = [
-            t for t in TRAILS_DB.values()
-            if query in t.name.lower() or query in t._difficulty.lower()
-        ]
+        # Search open trails by name matching query
+        results = Trail.objects.filter(is_open=True, name__icontains=query)
     return render(request, 'search.html', {'query': query, 'results': results})
